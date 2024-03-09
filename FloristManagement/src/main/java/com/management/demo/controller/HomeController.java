@@ -9,28 +9,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.management.demo.model.Category;
-import com.management.demo.service.impl.CategoryServiceImpl;
+import com.management.demo.service.CategoryService;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
-	private CategoryServiceImpl categoryServiceImpl;
+	private CategoryService categoryService;
 
-	public HomeController(CategoryServiceImpl categoryServiceImpl) {
+	public HomeController(CategoryService categoryService) {
 		super();
-		this.categoryServiceImpl = categoryServiceImpl;
+		this.categoryService = categoryService;
 	}
 	
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String home(Model model) {
-		List<Category> categories = categoryServiceImpl.getAllCategories();
+		List<Category> categories = categoryService.getAllCategories();
 		model.addAttribute("categories", categories);
 		return "home";
 	}
 	
-	@GetMapping("")
-	@ResponseBody
-	public String index() {
-		return "Greeting from TOMCAT";
-	}
 }
