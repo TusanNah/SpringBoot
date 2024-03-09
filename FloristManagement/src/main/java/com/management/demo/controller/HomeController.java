@@ -21,11 +21,16 @@ public class HomeController {
 		this.categoryServiceImpl = categoryServiceImpl;
 	}
 	
-	@GetMapping("")
+	@GetMapping("/home")
 	public String home(Model model) {
 		List<Category> categories = categoryServiceImpl.getAllCategories();
 		model.addAttribute("categories", categories);
 		return "home";
 	}
 	
+	@GetMapping("")
+	@ResponseBody
+	public String index() {
+		return "Greeting from TOMCAT";
+	}
 }
