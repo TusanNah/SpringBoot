@@ -1,6 +1,7 @@
 package com.management.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,22 @@ public class CategoryService {
 
 	public List<Category> getAllCategories() {
 		return categoryRepository.findAll();
+	}
+	
+	public Category save(Category category) {
+		return categoryRepository.save(category);
+	}
+	public Category findCategoryById(Long id) {
+		return categoryRepository.findById(id).get();
+	}
+	
+	public void deleteCategoryById(Long id) {
+		Optional<Category> category = categoryRepository.findById(id);
+		if (category.isEmpty()) {
+			return;
+		}
+		Category existingCategory = category.get();
+		categoryRepository.delete(existingCategory);
 	}
 
 }

@@ -12,11 +12,11 @@ import com.management.demo.model.Product;
 import com.management.demo.service.ProductService;
 
 @Controller
-@RequestMapping("/products")
-public class ProductsController {
+@RequestMapping("/product")
+public class ProductController {
 	ProductService productService;
 
-	public ProductsController(ProductService productService) {
+	public ProductController(ProductService productService) {
 		super();
 		this.productService = productService;
 	}
