@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -27,7 +28,6 @@ public class TokenService {
 	public String generateJwt(Authentication auth) {
 		Instant now = Instant.now();
 		
-		
 //		In the code snippet you provided, auth.getAuthorities() likely returns a collection (possibly a Set or a List) of GrantedAuthority objects. 
 //		By invoking stream() on this collection, 
 //		you convert it into a stream, which enables 
@@ -37,6 +37,7 @@ public class TokenService {
 		String scope = auth.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(" "));
+		System.out.println("authName ");
 		JwtClaimsSet claims = JwtClaimsSet.builder()
 				.issuer("self")
 				.issuedAt(now)
@@ -46,5 +47,8 @@ public class TokenService {
 		return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 	}
 	
+	 public Jwt decodeJwt(String token) {
+	        return jwtDecoder.decode(token);
+	    }
 
 }

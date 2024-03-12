@@ -42,11 +42,7 @@ public class ApplicationUser implements UserDetails {
 			)
 	private Set<Role> authorities;
 
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	
 	public ApplicationUser() {
@@ -95,7 +91,12 @@ public class ApplicationUser implements UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return null;
+		return username;
+	}
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return password;
 	}
 
 	@Override

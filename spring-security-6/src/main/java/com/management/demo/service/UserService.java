@@ -18,8 +18,6 @@ import com.management.demo.repository.UserRepository;
 @Service
 public class UserService implements UserDetailsService {
 	
-	@Autowired
-	private PasswordEncoder encoder;
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -28,7 +26,10 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		System.out.println("In the user details service");
-		return userRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("user is not valid"));
+		UserDetails u = userRepository.findByUsername(username).get();
+		System.out.println("User is UserService " + u);
+		System.out.println(u.getPassword());
+		return u;
 	}
 
 }
