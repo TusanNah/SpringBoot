@@ -18,37 +18,34 @@ import com.nimbusds.jwt.JWTClaimsSet;
 
 @Service
 public class TokenService {
-	
+
 	@Autowired
 	private JwtEncoder jwtEncoder;
-	
+
 	@Autowired
 	private JwtDecoder jwtDecoder;
-	
+
 	public String generateJwt(Authentication auth) {
 		Instant now = Instant.now();
-		
+
 //		In the code snippet you provided, auth.getAuthorities() likely returns a collection (possibly a Set or a List) of GrantedAuthority objects. 
 //		By invoking stream() on this collection, 
 //		you convert it into a stream, which enables 
 //		you to apply functional-style operations like 
 //		map() to transform each element in the stream 
 //		as needed.
-		String scope = auth.getAuthorities().stream()
-				.map(GrantedAuthority::getAuthority)
+		String scope = auth.getAuthorities().stream().map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(" "));
 		System.out.println("authName ");
-		JwtClaimsSet claims = JwtClaimsSet.builder()
-				.issuer("self")
-				.issuedAt(now)
-				.subject(auth.getName())
-				.claim("roles", scope)
-				.build();
+		JwtClaimsSet claims = JwtClaimsSet.builder().issuer("self").issuedAt(now).subject(auth.getName())
+				.claim("roles", scope).build();
 		return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 	}
-	
-	 public Jwt decodeJwt(String token) {
-	        return jwtDecoder.decode(token);
-	    }
+
+	public Jwt decodeJwt(String token) {
+		Jwt asd = jwtDecoder.decode(token);
+		System.out.println(asd.getClaims());
+		return jwtDecoder.decode(token);
+	}
 
 }
